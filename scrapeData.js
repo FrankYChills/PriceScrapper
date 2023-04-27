@@ -1,3 +1,4 @@
+require("dotenv").config();
 const puppeteer = require("puppeteer");
 
 const url = "https://www.metal.com/Lithium-ion-Battery/202303240001";
@@ -6,6 +7,16 @@ const main = async () => {
   const browser = await puppeteer.launch({
     // headless: false,
     // args: ["--window-size=1920,1080"],
+    args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
   });
   var price;
   try {
