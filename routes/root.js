@@ -1,7 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+const path = require("path");
+
 const main = require("../scrapeData");
+
+// default page
+router.get("^/$|/index(.html)?", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "views", "index.html"));
+});
 
 // get the request
 router.get("/price", async (req, res) => {
