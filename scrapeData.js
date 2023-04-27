@@ -7,21 +7,28 @@ const main = async () => {
     // headless: false,
     // args: ["--window-size=1920,1080"],
   });
+  var price;
+  try {
+    const page = await browser.newPage();
+    // throw new Error("hui");
+    await page.goto(url);
 
-  const page = await browser.newPage();
-  await page.goto(url);
+    price = await page.evaluate(() => {
+      const spanElementCollection = document.getElementsByClassName(
+        "strong___1JlBD priceDown___2TbRQ"
+      );
 
-  const price = await page.evaluate(() => {
-    const spanElementCollection = document.getElementsByClassName(
-      "strong___1JlBD priceDown___2TbRQ"
-    );
+      let spanElement = spanElementCollection[0];
+      const value = spanElement.innerText;
 
-    let spanElement = spanElementCollection[0];
-    const value = spanElement.innerText;
-
-    return value;
-  });
-  return price;
+      return value;
+    });
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await browser.close();
+    return price;
+  }
 };
 
 module.exports = main;

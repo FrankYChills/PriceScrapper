@@ -7,7 +7,7 @@ const main = require("../scrapeData");
 router.get("/price", async (req, res) => {
   var fetchedData = await main();
   if (typeof fetchedData == "undefined") {
-    return res.status(501).json({ message: "Error within the server" });
+    return res.status(501).json({ message: "Error while scraping the data" });
   }
   return res.status(200).json({ price: Number(fetchedData) });
 });
