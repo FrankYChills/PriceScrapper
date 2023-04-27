@@ -3,6 +3,8 @@ const express = require("express");
 // make app
 const app = express();
 
+const path = require("path");
+
 // define PORT
 const PORT = process.env.PORT || 4000;
 
@@ -23,6 +25,9 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Something broke!" });
 });
+
+// tell express to use static files(in views directory)
+app.use("/", express.static(path.join(__dirname, "public")));
 
 // handle requests
 app.use("/", require("./routes/root"));
